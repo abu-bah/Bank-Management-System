@@ -1,3 +1,13 @@
+/*
+BANK MANAGEMENT SYSTEM APPLICATION
+Original Author:   Abu-Bakar Bah
+Date:              4/21/2013
+Program Objective: This application serves as a banking system in which users
+can create and maintain as many accounts as they wish. Some of the functions
+of this program include: creating a new account, depositing and withdrawing
+funds and modifying accounts. 
+*/
+
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
@@ -5,15 +15,16 @@
 
 using namespace std;
 
+//START OF PROGRAM
 int main()
 {
-    accountHolder customer;
-    string customerName;
+    accountHolder customer; //create a new account holder class
     char userOption1, userOption2, answer1, answer2;
     
+    //intro
     cout << "================================================================================\n";
     cout << setw(53) << "BANK MANAGEMENT SYSTEM\n\n\n";
-    cout << setw(52) << "DEVELOPED BY: Abu-Bakar Bah";
+    cout << setw(52) << "DEVELOPED BY: Your name here";
     cout << "\n\n================================================================================\n";
     cout << "Press Enter to continue...";
     
@@ -22,6 +33,7 @@ int main()
        
        do {
            system("CLS");
+           //top menu
            cout << setw(22) << "Main Menu\n\n";
            cout << setw(26) << "1. New Account\n";
            cout << setw(31) << "2. Existing Account\n";
@@ -41,6 +53,7 @@ int main()
            else if (toupper(userOption1) == '2') {
                 do {
                    system("CLS"); 
+                   //sub menu for existing users only
                    cout << setw(33) << "Modify Existing Account\n\n";
                    cout << setw(26) << "1. Deposit Amount\n";
                    cout << setw(27) << "2. Withdraw Amount\n";
@@ -110,9 +123,10 @@ int main()
        } while (toupper(answer1) == 'Y' && toupper(answer2) != 'Y');
     }
     else 
-        cout << "I meant ONLY the Enter key... Oh well.";
+        cout << "I meant ONLY the Enter key... Oh well."; //message for slow users.....
     
     cin.get();
     cin.ignore();
-    return 0;   
+    return 0; 
+    //END OF PROGRAM  
 }
