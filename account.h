@@ -12,7 +12,8 @@ ofstream accountsList("accountslist.txt");
 //                   CLASSES USED IN PROJECT                   //
 //*************************************************************//
 
-class bankAccount {
+//this will be used as the superclass/main class where the data will be stored in a LINKED LIST
+class bankAccount { 
       public:
              string name, tempName;
              char accountType, tempAccountType;
@@ -28,7 +29,8 @@ class bankAccount {
              //CLASS ENDS HERE
 };
 
-class accountHolder:public bankAccount {
+//this will be used to hold the methods that will access and/or modify the data. It inherits from the "bankAccount" superclass as public
+class accountHolder:public bankAccount { 
       public:
               accountHolder(); //default constructor
               void entNewAccount(); //method to create new account
@@ -50,13 +52,13 @@ class accountHolder:public bankAccount {
 //ALL CLASSES END HERE
 
 //*************************************************************//
-//                   default constructor                       //
+//                       default constructor                       //
 //*************************************************************//
 
 accountHolder::accountHolder() {
-     headPtr = NULL;
-     currPtr = NULL;
-     tempPtr = NULL;
+     headPtr = NULL; //set the head pointer to NULL
+     currPtr = NULL; //set the current pointer to NULL
+     tempPtr = NULL; //set the temp pointer to NULL
 }
 
 //*************************************************************//
@@ -67,13 +69,13 @@ void accountHolder::entNewAccount() {
      cout << "============================NEW ACCOUNT ENTRY FORM==============================\n";  
      cout << setw(18) << "Account Holder: ";  
      
-     nodePtr newLink = new bankAccount;
-     newLink->link = NULL;
+     nodePtr newLink = new bankAccount; //create a new node to be used
+     newLink->link = NULL; //set the next node in the list to NULL
      
-     cin.ignore();
-     getline(cin, tempName);
+     cin.ignore(); //we use this here in order to clear the input buffer - this is necessary in this case
+     getline(cin, tempName); 
       
-     newLink->name = tempName;
+     newLink->name = tempName; 
      
      cout << setw(22) << "Account Type (C/S): ";     
      
@@ -85,9 +87,10 @@ void accountHolder::entNewAccount() {
      
      cin >> tempAccountPin; 
     
-     stringstream pinString;
-     pinString << tempAccountPin;
-    
+     stringstream pinString; //this is used as an efficient way to convert the user's pin to string in order to be used for validation 
+     pinString << tempAccountPin; //load the pin to the string stream
+     
+     //validate user's pin
      do {
          if (pinString.str().length() > 4) {
             while (pinString.str().length() > 4) {
@@ -107,6 +110,7 @@ void accountHolder::entNewAccount() {
             }
         }
     } while (pinString.str().length() > 4 || pinString.str().length() < 4);
+    //end of user pin validation
     
     newLink->pin = tempAccountPin;
              
@@ -117,14 +121,16 @@ void accountHolder::entNewAccount() {
     
     newLink->balance = tempBalance;
     
+    //generate a random account number for the user
     srand((unsigned)time(0)); 
     int random_integer; 
     random_integer = 0;
     for(int index = 0; index < 20; index++){ 
             random_integer = random_integer + (rand()%10)+1; 
     } 
+    //end of random account number generation
      
-    accountNumber = random_integer;
+    accountNumber = random_integer; //assign random number to accountNumber
     
     newLink->accountNumber = accountNumber;
     
@@ -148,8 +154,9 @@ void accountHolder::entNewAccount() {
 //*************************************************************//
 
 bool accountHolder::checkAccountNumber() {
-    cin.ignore();
+    cin.ignore(); //once again we clear the input buffer, just in case
     
+    //request and validate user's account number
     do {
         cin >> tempAccountNumber;
         
@@ -170,6 +177,7 @@ bool accountHolder::checkAccountNumber() {
              }    
         }
     } while (currPtr == NULL);
+    //end of user account number validation
 }
 
 //*************************************************************//
@@ -177,8 +185,9 @@ bool accountHolder::checkAccountNumber() {
 //*************************************************************//
 
 bool accountHolder::checkAccountPin() {
-    cin.ignore();
+    cin.ignore(); //once again we clear the input buffer, just in case
     
+    //request and validate user's pin
     do {
         cin >> tempAccountPin;
         
@@ -195,6 +204,7 @@ bool accountHolder::checkAccountPin() {
              }
     
     } while (currPtr == NULL);
+    //end of user pin validation
 }
 
 //*************************************************************//
@@ -221,10 +231,10 @@ string accountHolder::getAccountHolder() {
      currPtr = headPtr;
      
      while (currPtr != NULL) {
-           if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) 
+           if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) //if the records match...
               return currPtr->name;
            else
-               currPtr = currPtr->link;                           
+               currPtr = currPtr->link; //proceed traversing the list                         
      }
 }
 
@@ -236,10 +246,10 @@ char accountHolder::getAccountType() {
      currPtr = headPtr;
      
      while (currPtr != NULL) {
-           if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) 
+           if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) //if the records match...
               return currPtr->accountType;
            else
-               currPtr = currPtr->link;                           
+               currPtr = currPtr->link; //proceed traversing the list                           
      }
 }
 
@@ -251,10 +261,10 @@ double accountHolder::getAccountBalance() {
      currPtr = headPtr;
      
      while (currPtr != NULL) {
-           if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) 
+           if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) //if the records match...
               return currPtr->balance;
            else
-               currPtr = currPtr->link;                           
+               currPtr = currPtr->link; //proceed traversing the list                           
      }
 }
 
@@ -263,18 +273,18 @@ double accountHolder::getAccountBalance() {
 //*************************************************************//
 
 void accountHolder::depositAmount() {
-     cin.ignore();
+     cin.ignore(); //again we clear the input buffer, just in case
      cin >> tempAmount; 
      
      currPtr = headPtr;
      
      while (currPtr != NULL) {
-           if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) {
+           if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) { //if the records match...
               currPtr->balance += tempAmount;
-              break;
+              break; //exit the loop
            }
            else
-               currPtr = currPtr->link;                           
+               currPtr = currPtr->link; //proceed traversing the list                           
      }  
 }
 
@@ -283,13 +293,13 @@ void accountHolder::depositAmount() {
 //*************************************************************//
 
 bool accountHolder::withdrawAmount() {
-     cin.ignore();
+     cin.ignore(); //again we clear the input buffer, just in case
      cin >> tempAmount;  
      
         currPtr = headPtr;
         
         while (currPtr != NULL) {
-              if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) {
+              if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) { //if the records match...
                  if (tempAmount < currPtr->balance) { //only allow withdrawal if the amount to be withdrawn is less than the actual balance
                      currPtr->balance -= tempAmount;
                      return true;
@@ -298,7 +308,7 @@ bool accountHolder::withdrawAmount() {
                       return false;
               }
               else
-                 currPtr = currPtr->link;                           
+                 currPtr = currPtr->link; //proceed traversing the list                          
         }
 }
 
@@ -307,15 +317,17 @@ bool accountHolder::withdrawAmount() {
 //*************************************************************//
 
 void accountHolder::closeAccount() {
-     cin.ignore();
+     cin.ignore(); //again we clear the input buffer, just in case
      
+     //request and validate user's account and pin numbers
      cout << "  Enter account number: ";
      if (checkAccountNumber()) {
         cout << "  Enter pin number: ";
         checkAccountPin();
      }
+     //end of user account and pin number validation
      
-     nodePtr delPtr = NULL;
+     nodePtr delPtr = NULL; //create a new node and initialize it to NULL
      tempPtr = headPtr;
      currPtr = headPtr;
      
@@ -328,7 +340,7 @@ void accountHolder::closeAccount() {
      currPtr = currPtr->link; 
      tempPtr->link = currPtr;
      
-     delete delPtr;
+     delete delPtr; //remove this node from the list
     
      cout << "  Your account was successfully deleted.";
 }
@@ -338,8 +350,9 @@ void accountHolder::closeAccount() {
 //*************************************************************//
 
 void accountHolder::modifyAccount() {
-     cin.ignore();
+     cin.ignore(); //clear the input buffer,
      
+     //request and validate user's account and pin numbers
      cout << "  Enter account number: ";
      if (checkAccountNumber()) {
         cout << "  Enter pin number: ";
@@ -348,7 +361,7 @@ void accountHolder::modifyAccount() {
              currPtr = headPtr;
      
              while (currPtr != NULL) {
-                   if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) {
+                   if (currPtr->accountNumber == tempAccountNumber && currPtr->pin == tempAccountPin) { //if the records match...
                       cout << "\n  -----ACCOUNT STATUS-----\n";
                       cout << "\n  Account No. :    " << getAccountNumber();
                       cout << "\n  Pin No. :        " << getPinNumber();
@@ -357,7 +370,8 @@ void accountHolder::modifyAccount() {
                       cout << "\n  Account Balance: " << getAccountBalance();   
                       cout << "\n\n";
                       cout << "  -----Enter new details-----\n\n";
-                        
+                      
+                      //start of user account modification
                       cout << "  Modify Pin No. : ";
                       cin >> tempAccountPin;
                       cout << "  Modify Account Holder: ";
@@ -369,13 +383,14 @@ void accountHolder::modifyAccount() {
                       currPtr->pin = tempAccountPin;
                       currPtr->name = tempName;
                       currPtr->accountType = tempAccountType;
+                      //end of user account modification
                       
                       cout << "  Your account was successfully updated.";
                       
-                      break;               
+                      break; //exit the loop              
                    } 
                    else
-                       currPtr = currPtr->link;     
+                       currPtr = currPtr->link; //proceed traversing the list  
              }                    
         }
      }
