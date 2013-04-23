@@ -3,9 +3,10 @@ BANK MANAGEMENT SYSTEM APPLICATION
 Original Author:   Abu-Bakar Bah
 Date:              4/21/2013
 Program Objective: This application serves as a banking system in which users
-can create and maintain as many accounts as they wish. Some of the functions
-of this program include: creating a new account, depositing and withdrawing
-funds and modifying accounts. 
+                   can create and maintain as many accounts as they wish. Some 
+                   of the functions of this program include: creating a new 
+                   account, depositing and withdrawing funds and modifying 
+                   accounts. 
 */
 
 #include <iostream>
