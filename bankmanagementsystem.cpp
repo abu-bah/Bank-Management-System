@@ -19,7 +19,7 @@ using namespace std;
 //START OF PROGRAM
 int main()
 {
-    accountHolder customer; //create a new account holder class
+    accountHolder customer; //create a new account holder object
     char userOption1, userOption2, answer1, answer2;
     
     //intro
